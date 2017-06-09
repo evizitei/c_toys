@@ -3,8 +3,8 @@
 #include <math.h>
 #include <stdlib.h>
 
-int arraySum(int size, int* p){
-  int total = 0;
+long arraySum(int size, long* p){
+  long total = 0;
   for(int i = 0; i < size; i++){
     total = total + *(p + i);
   }
@@ -14,11 +14,11 @@ int arraySum(int size, int* p){
 int main(){
   int size;
   scanf("%i", &size);
-  int *values = malloc(sizeof(int) * size);
+  long *values = malloc(sizeof(long) * size);
   for(int i = 0; i < size; i++){
-    scanf("%i", &values[i]);
+    scanf("%li", &values[i]);
   }
-  int output = arraySum(size, values);
-  printf("%d\n", output);
+  long output = arraySum(size, values);
+  printf("%ld\n", output);
   return 0;
 }
