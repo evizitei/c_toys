@@ -27,4 +27,5 @@ int main(){
   }
   int *output = tripCompare(trips);
   printf("%d %d\n", *(output), *(output + 1));
+  return 0;
 }
