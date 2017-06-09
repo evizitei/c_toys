@@ -5,3 +5,4 @@ compile:
 	gcc algo/compare_triplets.c -o target/compare_triplets
 	gcc algo/diagonal_diff.c -o target/diagonal_diff
 	gcc algo/plus_minus.c -o target/plus_minus
+	gcc algo/staircase.c -o target/staircase
