@@ -6,3 +6,4 @@ compile:
 	gcc algo/diagonal_diff.c -o target/diagonal_diff
 	gcc algo/plus_minus.c -o target/plus_minus
 	gcc algo/staircase.c -o target/staircase
+	gcc algo/min_max.c -o target/min_max
