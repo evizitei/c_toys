@@ -40,49 +40,72 @@ Sample Input
 Sample Output
 1
 1
+
+2082
+1960
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 
+long strikeCount(long hLeft, long hRight, long treePos, long *distances, long fruitCount){
+  long count = 0;
+  if(treePos < hLeft){
+    long threshold = hLeft - treePos;
+    long outerThreshold = hRight - treePos;
+    for(int i = 0; i < fruitCount; i++){
+      if(distances[i] >= threshold && distances[i] <= outerThreshold){
+        count++;
+      }
+    }
+    return count;
+  }else if(treePos > hRight){
+    long threshold = hRight - treePos;
+    long outerThreshold = hLeft - treePos;
+    for(int i = 0; i < fruitCount; i++){
+      if(distances[i] <= threshold && distances[i] >= outerThreshold){
+        count++;
+      }
+    }
+    return count;
+  }else{
+    printf("invalid input...%ld %ld %ld", hLeft, hRight, treePos);
+    return -1;
+  }
+}
+
 int main(){
-  int houseLeft, houseRight;
-  scanf("%d %d", &houseLeft, &houseRight);
-  int aTree, oTree;
-  scanf("%d %d", &aTree, &oTree);
-  int aCount, oCount;
-  scanf("%d %d", &aCount, &oCount);
-  int *aDistances = malloc(sizeof(int) * aCount);
-  int *oDistances = malloc(sizeof(int) * oCount);
+  long houseEdgeA, houseEdgeB;
+  long houseLeft, houseRight;
+  scanf("%ld %ld", &houseEdgeA, &houseEdgeB);
+  if(houseEdgeB > houseEdgeA){
+    houseLeft = houseEdgeA;
+    houseRight = houseEdgeB;
+  }else{
+    houseLeft = houseEdgeB;
+    houseRight = houseEdgeA;
+  }
+  long aTree, oTree;
+  scanf("%ld %ld", &aTree, &oTree);
+  long aCount, oCount;
+  scanf("%ld %ld", &aCount, &oCount);
+  long *aDistances = malloc(sizeof(long) * aCount);
+  long *oDistances = malloc(sizeof(long) * oCount);
 
   for(int i = 0; i < aCount; i++){
-    scanf("%d", &aDistances[i]);
+    scanf("%ld", &aDistances[i]);
   }
   for(int i = 0; i < oCount; i++){
-    scanf("%d", &oDistances[i]);
+    scanf("%ld", &oDistances[i]);
   }
 
   /* calculate strikes */
-  int aStrikeCount = 0;
-  int oStrikeCount = 0;
-  int aThreshold = houseLeft - aTree;
-  int oThreshold = houseRight - oTree;
-
-  for(int i = 0; i < aCount; i++){
-    if(aDistances[i] >= aThreshold){
-      aStrikeCount++;
-    }
-  }
-
-  for(int i = 0; i < oCount; i++){
-    if(oDistances[i] <= oThreshold){
-      oStrikeCount++;
-    }
-  }
+  long aStrikeCount = strikeCount(houseLeft, houseRight, aTree, aDistances, aCount);
+  long oStrikeCount = strikeCount(houseLeft, houseRight, oTree, oDistances, oCount);
 
   /* output results */
 
-  printf("%i\n", aStrikeCount);
-  printf("%i\n", oStrikeCount);
+  printf("%li\n", aStrikeCount);
+  printf("%li\n", oStrikeCount);
   return 0;
 }
