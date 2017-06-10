@@ -82,6 +82,7 @@ int main(){
 
   /* output results */
 
-  printf("%i %i\n", aStrikeCount, oStrikeCount);
+  printf("%i\n", aStrikeCount);
+  printf("%i\n", oStrikeCount);
   return 0;
 }
