@@ -7,3 +7,4 @@ compile:
 	gcc algo/plus_minus.c -o target/plus_minus
 	gcc algo/staircase.c -o target/staircase
 	gcc algo/min_max.c -o target/min_max
+	gcc algo/apple_orange.c -o target/apple_orange
