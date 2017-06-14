@@ -10,3 +10,4 @@ compile:
 	gcc algo/apple_orange.c -o target/apple_orange
 	gcc algo/kangaroo.c -o target/kangaroo
 	gcc algo/between_sets.c -o target/between_sets
+	gcc algo/birthday_chocolate.c -o target/birthday_chocolate
