@@ -11,3 +11,4 @@ compile:
 	gcc algo/kangaroo.c -o target/kangaroo
 	gcc algo/between_sets.c -o target/between_sets
 	gcc algo/birthday_chocolate.c -o target/birthday_chocolate
+	gcc algo/div_sum_pairs.c -o target/div_sum_pairs
