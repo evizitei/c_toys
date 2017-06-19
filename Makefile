@@ -1,6 +1,6 @@
 
 compile:
-	gcc algo/bon_appetit.c -o target/bon_appetit
+	gcc algo/leader_climbing.c -o target/leader_climbing
 
 compile_all:
 	gcc algo/sum.c -o target/sum
@@ -16,3 +16,4 @@ compile_all:
 	gcc algo/birthday_chocolate.c -o target/birthday_chocolate
 	gcc algo/div_sum_pairs.c -o target/div_sum_pairs
 	gcc algo/day_of_programmer.c -o target/day_of_programmer
+	gcc algo/bon_appetit.c -o target/bon_appetit
