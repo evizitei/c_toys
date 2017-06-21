@@ -46,6 +46,16 @@ int runQuery(int **seqList, int *seqSizes, int n, struct query curQ, int lastAns
   if(curQ.type == 1){
     // append value
     // TODO: check size and double as necessary
+    if(seqSize >=2 && ((seqSize & (seqSize - 1)) == 0)){
+      // is power of 2, double size
+      int *bigSeq = realloc(seq, seqSize * 2 * sizeof(int));
+      if(!bigSeq){
+        printf("ERROR: Realloc failed!");
+        return -1;
+      }
+      seq = bigSeq;
+      seqList[seqIdx] = bigSeq;
+    }
     seq[seqSize] = curQ.y;
     seqSizes[seqIdx] = seqSize + 1;
     return lastAnswer;
@@ -71,7 +81,8 @@ int main(){
   int **seqList = malloc(n * sizeof(int *));
   int *seqSizes = calloc(n, sizeof(int)); // all seqs start at 0 size
   for(int ni = 0; ni < n; ni++){
-    seqList[ni] = malloc(n * sizeof(int));
+    // initialize them all to small arrays, will double as necessary
+    seqList[ni] = malloc(2 * sizeof(int));
   }
   int lastAnswer = 0;
 
