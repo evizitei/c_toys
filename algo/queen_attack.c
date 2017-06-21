@@ -31,30 +31,87 @@ Sample Output 0
 #include <limits.h>
 #include <stdbool.h>
 
-long boardIndex(int row, int col, long n){
-  return ((row - 1) * n) + (col - 1);
+int min(a, b){
+  if(a < b){
+    return a;
+  }
+  return b;
 }
 
-int attacksInDirection(int rs, int cs, int *board, long n, int rInc, int cInc){
-  int dirAttacks = 0;
-  int curRow = rs;
-  int curCol = cs;
-  for(int i = 0; i < n; i++){
-    curRow = curRow + rInc;
-    curCol = curCol + cInc;
-    if(curRow >= 1 && curRow <= n && curCol >= 1 && curCol <= n){
-      long idx = boardIndex(curRow, curCol, n);
-      int val = board[idx];
-      if(val == 1){
-        break; // struck obstacle
-      }else{
-        dirAttacks = dirAttacks + 1;
+int *distancesToEdge(int initRow, int initCol, int boardSize){
+  // one in each direction, starting with [0] (which is up), and proceeding clockwise
+  // (up-left is last)
+  int *distances = malloc(8*sizeof(int));
+  distances[0] = boardSize - initRow; // up
+  distances[1] = min(boardSize - initRow, boardSize - initCol);
+  distances[2] = boardSize - initCol; // right
+  distances[3] = min(boardSize - initCol, initRow - 1);
+  distances[4] = initRow - 1; // down
+  distances[5] = min(initRow - 1, initCol - 1);
+  distances[6] = initCol - 1; // left
+  distances[7] = min(boardSize - initRow, initCol - 1);
+  return distances;
+}
+
+void updateMinDistances(int *dists, int rQueen, int cQueen, int rObstacle, int cObstacle){
+  bool sameCol = (cQueen == cObstacle);
+  bool sameRow = (rQueen == rObstacle);
+  bool sameRDiag = (rQueen - rObstacle) == (cQueen - cObstacle);
+  bool sameLDiag = (rQueen - rObstacle) == -1 * (cQueen - cObstacle);
+  int distance;
+  if(sameCol){
+    /* check up down */
+    if(rQueen > rObstacle){ // obstacle is down
+      distance = (rQueen - rObstacle) - 1;
+      if(distance < dists[4]){
+        dists[4] = distance;
       }
-    }else{
-      break;
+    }else if (rQueen < rObstacle){ // obstacle is up
+      distance = (rObstacle - rQueen) - 1;
+      if(distance < dists[0]){
+        dists[0] = distance;
+      }
+    }
+  }else if(sameRow){
+    /* check left right */
+    if(cQueen > cObstacle){ //obstacle is left
+      distance = (cQueen - cObstacle) - 1;
+      if(distance < dists[6]){
+        dists[6] = distance;
+      }
+    }else if(cQueen < cObstacle){ //obstacle is right
+      distance = (cObstacle - cQueen) - 1;
+      if(distance < dists[2]){
+        dists[2] = distance;
+      }
+    }
+  }else if(sameRDiag){
+    /* check upright, down left */
+    if(rQueen < rObstacle && cQueen < cObstacle){ // obstacle is up right
+      distance = (rObstacle - rQueen) - 1;
+      if(distance < dists[1]){
+        dists[1] = distance;
+      }
+    }else if(rQueen > rObstacle && cQueen > cObstacle){ //obstacle is down left
+      distance = (rQueen - rObstacle) - 1;
+      if(distance < dists[5]){
+        dists[5] = distance;
+      }
+    }
+  }else if(sameLDiag){
+    /* check upleft, down right */
+    if(rQueen < rObstacle && cQueen > cObstacle){ // obstacle is up left
+      distance = (rObstacle - rQueen) - 1;
+      if(distance < dists[7]){
+        dists[7] = distance;
+      }
+    }else if(rQueen > rObstacle && cQueen < cObstacle){ // obstacle is down right
+      distance = (rQueen - rObstacle) - 1;
+      if(distance < dists[3]){
+        dists[3] = distance;
+      }
     }
   }
-  return dirAttacks;
 }
 
 int main(){
@@ -64,25 +121,19 @@ int main(){
     int rQueen;
     int cQueen;
     scanf("%d %d",&rQueen,&cQueen);
+    int *dir_dists = distancesToEdge(rQueen, cQueen, n);
     int attackCount = 0;
-    long boardSize = n * n;
-    int *board = calloc(boardSize, sizeof(int));
+
     for(int a0 = 0; a0 < k; a0++){
         int rObstacle;
         int cObstacle;
         scanf("%d %d",&rObstacle,&cObstacle);
-        long obstacleIndex = boardIndex(rObstacle, cObstacle, n);
-        board[obstacleIndex] = 1;
+        updateMinDistances(dir_dists, rQueen, cQueen, rObstacle, cObstacle);
     }
 
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, 1, 0); // up
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, 1, 1); // up-right
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, 0, 1); // right
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, -1, 1); // down-right
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, -1, 0); // down
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, -1, -1); // down-left
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, 0, -1); // left
-    attackCount = attackCount + attacksInDirection(rQueen, cQueen, board, n, 1, -1); // up-left
+    for(int i = 0; i < 8; i++){
+      attackCount = attackCount + dir_dists[i];
+    }
     printf("%d\n", attackCount);
     return 0;
 }
