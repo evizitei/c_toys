@@ -1,6 +1,6 @@
 
 compile:
-	gcc algo/queen_attack.c -o target/queen_attack
+	gcc data_structs/dyn_array.c -o target/dyn_array
 
 compile_all:
 	gcc algo/sum.c -o target/sum
@@ -19,5 +19,6 @@ compile_all:
 	gcc algo/bon_appetit.c -o target/bon_appetit
 	gcc algo/leader_climbing.c -o target/leader_climbing
 	gcc algo/find_digits.c -o target/find_digits
+	gcc algo/queen_attack.c -o target/queen_attack
 	gcc data_structs/array_ds.c -o target/array_ds
 	gcc data_structs/hourglass.c -o target/hourglass
