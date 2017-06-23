@@ -1,6 +1,6 @@
 
 compile:
-	gcc ai/bot_saves_princess.c -o target/bot_saves_princess
+	gcc ai/bot_saves_princess_2.c -o target/bot_saves_princess_2
 
 compile_all:
 	gcc algo/sum.c -o target/sum
@@ -24,3 +24,4 @@ compile_all:
 	gcc data_structs/array_ds.c -o target/array_ds
 	gcc data_structs/hourglass.c -o target/hourglass
 	gcc data_structs/dyn_array.c -o target/dyn_array
+	gcc ai/bot_saves_princess.c -o target/bot_saves_princess
