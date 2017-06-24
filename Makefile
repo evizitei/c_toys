@@ -1,6 +1,6 @@
 
 compile:
-	gcc algo/sock_merchant.c -o target/sock_merchant
+	gcc data_structs/left_rotation.c -o target/left_rotation
 
 compile_all:
 	gcc algo/sum.c -o target/sum
@@ -21,6 +21,7 @@ compile_all:
 	gcc algo/find_digits.c -o target/find_digits
 	gcc algo/queen_attack.c -o target/queen_attack
 	gcc algo/reduced_string.c -o target/reduced_string
+	gcc algo/sock_merchant.c -o target/sock_merchant
 	gcc data_structs/array_ds.c -o target/array_ds
 	gcc data_structs/hourglass.c -o target/hourglass
 	gcc data_structs/dyn_array.c -o target/dyn_array
